@@ -49,6 +49,18 @@ def NUser():
     print("New Used Has Been Created Successfully")
 
 
+def GlobalChat():
+    pass
+
+
+def KahesiModeOnn(username, password):
+    print("We At ChatBox Welcome you to our Application")
+    print("We are Continuously working on adding More and more features but till then you can enjoy our Global chat")
+    print("Enter 1 to gain access to Global Chat")
+    x = int(input())
+    if x == 1:
+        GlobalChat()
+
 def ULogin():
     print("UserName")
     username = input()
@@ -59,6 +71,7 @@ def ULogin():
     for x in mydoc:
         if x["UPassword"] == password:
             print("LOGIN SUCCESSFUL!!!")
+            KahesiModeOnn(username,password)
 
 
 def DUser():
