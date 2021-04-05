@@ -5,6 +5,7 @@ myclient = pymongo.MongoClient(
     "mongodb+srv://CodingBlood:kartik2002@cluster0.njrx7.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
 mydb = myclient["Chatbox"]
 mycol = mydb["UserDetails"]
+
 # ======================================================================================================================
 # mydict = { "UName": "KahesiBot4", "UPassword": "GrippenBot4" }
 # x = mycol.insert_one(mydict)
@@ -21,14 +22,7 @@ mycol = mydb["UserDetails"]
 # for x in mydoc:
 #   print(x)
 # ======================================================================================================================
-print("Hi there Welcome to Online Chating Room")
-print("Only benefit of this is no one knows you are here :):)")
-print("You have only 4 options, 3 of them are as follows and 4th is fuckoff")
-print("1) New User")
-print("2) Login")
-print("3) Delete account")
-print("Your Choice 1 or 2 or 3 or fuckoff : ")
-x = int(input())
+
 
 
 def NUser():
@@ -46,7 +40,8 @@ def NUser():
     password = input()
     mydict = {"UName": username, "UPassword": password}
     x = mycol.insert_one(mydict)
-    print("New Used Has Been Created Successfully")
+    print("New User Has Been Created Successfully")
+    main()
 
 
 def NewGlobalMessage(username, x):
@@ -55,6 +50,10 @@ def NewGlobalMessage(username, x):
     mydict = {"UName": username, "Message": x}
     temperory_variable = GChat.insert_one(mydict)
     GlobalChat(username)
+
+
+def Write_Message(iterate):
+    print(iterate["UName"].capitalize() + " : " + iterate["Message"])
 
 
 def GlobalChat(username):
@@ -78,7 +77,7 @@ def GlobalChat(username):
     mydb = myclient["Chatbox"]
     GChat = mydb["GlobalChat"]
     for iterate in GChat.find({}, {"_id": 0, "UName": 1, "Message": 1}):
-        print(iterate)
+        Write_Message(iterate)
     while True :
         print(">>")
         x = str(input())
@@ -92,32 +91,50 @@ def KahesiModeOnn(username):
     print("We At ChatBox Welcome you to our Application")
     print("We are Continuously working on adding More and more features but till then you can enjoy our Global chat")
     print("Enter 1 to gain access to Global Chat")
+    print("Enter 2 to gain access to LOGOUT")
     x = int(input())
     if x == 1:
         GlobalChat(username)
+    elif x == 2:
+        main()
 
 def ULogin():
     print("UserName")
     username = input()
     print("Password")
     password = input()
-    myquery = {"UName": "CodingBlood"}
+    myquery = {"UName": username}
     mydoc = mycol.find(myquery)
     for x in mydoc:
         if x["UPassword"] == password:
             print("LOGIN SUCCESSFUL!!!")
             KahesiModeOnn(username)
+        else:
+            print("LoginFailed")
+            print()
+            print()
+            main()
+
 
 
 def DUser():
     pass
 
-
-if x == 1:
-    NUser()
-elif x == 2:
-    ULogin()
-elif x == 3:
-    DUser()
-else:
-    print("Sorry Wrong Choice, I guess you really like fucking around")
+def main():
+    print("Hi there Welcome to Online Chating Room")
+    print("Only benefit of this is no one knows you are here :):)")
+    print("You have only 4 options, 3 of them are as follows and 4th is fuckoff")
+    print("1) New User")
+    print("2) Login")
+    print("3) Delete account")
+    print("Your Choice 1 or 2 or 3 or fuckoff : ")
+    x = int(input())
+    if x == 1:
+        NUser()
+    elif x == 2:
+        ULogin()
+    elif x == 3:
+        DUser()
+    else:
+        print("Sorry Wrong Choice, I guess you really like fucking around")
+main()
