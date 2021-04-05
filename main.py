@@ -4,7 +4,6 @@
 # ======================================================================================================================
 import pymongo
 import os
-from subprocess import *
 os.system('cls' if os.name == 'nt' else 'clear')
 myclient = pymongo.MongoClient(
     "mongodb+srv://CodingBlood:kartik2002@cluster0.njrx7.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
@@ -63,18 +62,10 @@ def Write_Message(iterate):
     print(iterate["UName"].capitalize() + " : " + iterate["Message"])
 
 
-def DeOrActivate(what):
-    # changeStream = 1
-    if what == 1:
-        changeStream = os.startfile(r"ChangeStream.exe")
-        return changeStream
-    # elif what == 0:
-        # os.close(changeStream)
-
 def GlobalChat(username, ChangeStreamVaraible):
     os.system('cls' if os.name == 'nt' else 'clear')
     if(ChangeStreamVaraible == 0):
-        DeOrActivate(1)
+        os.startfile(r"ChangeStream.exe")
         ChangeStreamVaraible += 1
     print("NOTE:- ENTER YOUR MESSAGE AFTER >> AND ENTER $_ TO EXIT... ")
     while True:
@@ -83,7 +74,6 @@ def GlobalChat(username, ChangeStreamVaraible):
         if x != "$_":
             NewGlobalMessage(username, x)
         else:
-            # DeOrActivate(0)
             KahesiModeOnn(username)
 
 
@@ -122,6 +112,28 @@ def DUser():
 
 
 def NSUser():
+    print("Enter Security Key Now!! >> ")
+    security_key = str(input())
+    if security_key != "9211BadAss!)@(#*$&%^BadAss9211":
+        main()
+    mycol = mydb["SuperUserDetails"]
+    print("No personal data required we don't wanna know who and why you are")
+    print("UserName Or '$-' to go back")
+    username = input()
+    if username == '$-':
+        main()
+    myquery = {"UName": username}
+    mydoc = mycol.find(myquery)
+    for x in mydoc:
+        res = not bool(x)
+        while not res:
+            print("Username Already Exists")
+            NUser()
+    print("Password")
+    password = input()
+    mydict = {"UName": username, "UPassword": password}
+    x = mycol.insert_one(mydict)
+    print("New User Has Been Created Successfully")
     main()
 
 def NPuGrp():
@@ -134,6 +146,46 @@ def NPriGrp():
 def FFinder():
     main()
 
+
+def SuperKahesiModeOnn(username):
+    print("Welcome Master. What can I show to please you...?")
+    print("1) User Details")
+    print("2) Super User Details")
+    print("3) Go Back")
+    x = int(input())
+    if x == 1:
+        Udetails = mydb["UserDetails"]
+        for iterate in Udetails.find({}, {"_id": 0, "UName": 1, "Message": 1}):
+            print(iterate["UName"].capitalize())
+            SuperKahesiModeOnn(username)
+    elif x ==2:
+        SUDetails = mydb["SuperUserDetails"]
+        for iterate in SUDetails.find({}, {"_id": 0, "UName": 1, "Message": 1}):
+            print(iterate["UName"].capitalize())
+            SuperKahesiModeOnn(username)
+    else:
+        main()
+
+
+def SULogin():
+    mycol = mydb["SuperUserDetails"]
+    print("Username:")
+    username = input()
+    print("Password")
+    password = input()
+    myquery = {"UName": username}
+    mydoc = mycol.find(myquery)
+    for x in mydoc:
+        if x["UPassword"] == password:
+            print("LOGIN SUCCESSFUL!!!")
+            SuperKahesiModeOnn(username)
+        else:
+            print("LoginFailed")
+            print()
+            print()
+            main()
+
+
 def main():
     os.system('cls' if os.name == 'nt' else 'clear')
     print("Hi there Welcome to Online Chatting Room")
@@ -141,11 +193,12 @@ def main():
     print("Choose Wisely:---------------")
     print("1) New User")
     print("2) Login")
-    print("3) Delete account")
-    print("4) New Super User")
-    print("5) New Public Group")
-    print("6) New Private Group")
-    print("7) Find Friend By Id")
+    print("3) Login Super User")
+    print("4) Delete account")
+    print("5) New Super User")
+    print("6) New Public Group")
+    print("7) New Private Group")
+    print("8) Find Friend By Id")
     print("My Dear Friend Enter Your Choice Here >> ")
     x = int(input())
     if x == 1:
@@ -153,14 +206,16 @@ def main():
     elif x == 2:
         ULogin()
     elif x == 3:
-        DUser()
+        SULogin()
     elif x == 4:
-        NSUser()
+        DUser()
     elif x == 5:
-        NPuGrp()
+        NSUser()
     elif x == 6:
-        NPriGrp()
+        NPuGrp()
     elif x == 7:
+        NPriGrp()
+    elif x == 8:
         FFinder()
     else:
         print("Sorry Wrong Choice, I guess you really like fucking around")
