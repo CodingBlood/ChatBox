@@ -1,14 +1,16 @@
-#=======================================================================================================================
+# =======================================================================================================================
 #  Enter "auto-py-to-exe" this in terminal to generate the exe file
 #  Note:-   "pip install auto-py-to-exe" this is already done in this virtual environment
 # ======================================================================================================================
 import pymongo
 import os
+from subprocess import *
 os.system('cls' if os.name == 'nt' else 'clear')
 myclient = pymongo.MongoClient(
     "mongodb+srv://CodingBlood:kartik2002@cluster0.njrx7.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
 mydb = myclient["Chatbox"]
 mycol = mydb["UserDetails"]
+
 
 # ======================================================================================================================
 # mydict = { "UName": "KahesiBot4", "UPassword": "GrippenBot4" }
@@ -26,7 +28,6 @@ mycol = mydb["UserDetails"]
 # for x in mydoc:
 #   print(x)
 # ======================================================================================================================
-
 
 
 def NUser():
@@ -55,42 +56,33 @@ def NewGlobalMessage(username, x):
     GChat = mydb["GlobalChat"]
     mydict = {"UName": username, "Message": x}
     temperory_variable = GChat.insert_one(mydict)
-    GlobalChat(username)
+    GlobalChat(username, 1)
 
 
 def Write_Message(iterate):
     print(iterate["UName"].capitalize() + " : " + iterate["Message"])
 
 
-def GlobalChat(username):
-    os.system('cls' if os.name == 'nt' else 'clear')
-    print("NOTE:- ENTER YOUR MESSAGE AFTER >> AND ENTER $_ TO EXIT... ")
-    print(
-        '''
-        =============================================================================================================================
-        |   GGGGGGGGGGGGG                                                       CCCCCCCCCCCCCC                                      |
-        |   GGGGGGGGGGGGG                                                       CCCCCCCCCCCCCC                                      |
-        |   GGG                                                                 CCC                                                 |
-        |   GGG                                                                 CCC                                                 |
-        |   GGG     GGGGG   LL        OOOOOOO   BBBBBB  AAAAAAAA    LL          CCC             HH    HH    AAAAAAA    TTTTTTTT     |
-        |   GGG     GGGGG   LL        O     O   B    B  A      A    LL          CCC             HH    HH    AA   AA       TT        |
-        |   GGG        GG   LL        O     O   BBBBBB  AAAAAAAA    LL          CCC             HHHHHHHH    AAAAAAA       TT        |
-        |   GGGGGGGGGGGGG   LL        O     O   B    B  A      A    LL          CCCCCCCCCCCCCC  HH    HH    AA   AA       TT        |
-        |   GGGGGGGGGGGGG   LLLLLLLL  OOOOOOO   BBBBBB  A      A    LLLLLLLL    CCCCCCCCCCCCCC  HH    HH    AA   AA       TT        |
-        =============================================================================================================================
-        ''')
-    x = ""
+def DeOrActivate(what):
+    # changeStream = 1
+    if what == 1:
+        changeStream = os.startfile(r"ChangeStream.exe")
+        return changeStream
+    # elif what == 0:
+        # os.close(changeStream)
 
-    mydb = myclient["Chatbox"]
-    GChat = mydb["GlobalChat"]
-    for iterate in GChat.find({}, {"_id": 0, "UName": 1, "Message": 1}):
-        Write_Message(iterate)
-    while True :
+def GlobalChat(username, ChangeStreamVaraible):
+    os.system('cls' if os.name == 'nt' else 'clear')
+    if(ChangeStreamVaraible == 0):
+        DeOrActivate(1)
+        ChangeStreamVaraible += 1
+    while True:
         print(">>")
         x = str(input())
         if x != "$_":
             NewGlobalMessage(username, x)
         else:
+            # DeOrActivate(0)
             KahesiModeOnn(username)
 
 
@@ -101,9 +93,10 @@ def KahesiModeOnn(username):
     print("Enter 2 to gain access to LOGOUT")
     x = int(input())
     if x == 1:
-        GlobalChat(username)
+        GlobalChat(username, 0)
     elif x == 2:
         main()
+
 
 def ULogin():
     print("Username:")
@@ -123,9 +116,9 @@ def ULogin():
             main()
 
 
-
 def DUser():
     pass
+
 
 def main():
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -146,4 +139,6 @@ def main():
     else:
         print("Sorry Wrong Choice, I guess you really like fucking around")
         main()
+
+
 main()
