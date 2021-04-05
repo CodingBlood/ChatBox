@@ -50,7 +50,11 @@ def NUser():
 
 
 def NewGlobalMessage(username, x):
-    pass
+    mydb = myclient["Chatbox"]
+    GChat = mydb["GlobalChat"]
+    mydict = {"UName": username, "Message": x}
+    temperory_variable = GChat.insert_one(mydict)
+    GlobalChat(username)
 
 
 def GlobalChat(username):
@@ -70,11 +74,18 @@ def GlobalChat(username):
         =============================================================================================================================
         ''')
     x = ""
-    while x != "$_":
+
+    mydb = myclient["Chatbox"]
+    GChat = mydb["GlobalChat"]
+    for iterate in GChat.find({}, {"_id": 0, "UName": 1, "Message": 1}):
+        print(iterate)
+    while True :
         print(">>")
         x = str(input())
-        NewGlobalMessage(username, x)
-    KahesiModeOnn(username)
+        if x != "$_":
+            NewGlobalMessage(username, x)
+        else:
+            KahesiModeOnn(username)
 
 
 def KahesiModeOnn(username):
