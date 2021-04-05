@@ -1,6 +1,10 @@
+#=======================================================================================================================
+#  Enter "auto-py-to-exe" this in terminal to generate the exe file
+#  Note:-   "pip install auto-py-to-exe" this is already done in this virtual environment
 # ======================================================================================================================
 import pymongo
-
+import os
+os.system('cls' if os.name == 'nt' else 'clear')
 myclient = pymongo.MongoClient(
     "mongodb+srv://CodingBlood:kartik2002@cluster0.njrx7.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
 mydb = myclient["Chatbox"]
@@ -27,8 +31,10 @@ mycol = mydb["UserDetails"]
 
 def NUser():
     print("No personal data required we dont wanna know who and why you are")
-    print("UserName")
+    print("UserName Or '$-' to go back")
     username = input()
+    if username == '$-':
+        main()
     myquery = {"UName": username}
     mydoc = mycol.find(myquery)
     for x in mydoc:
@@ -57,6 +63,7 @@ def Write_Message(iterate):
 
 
 def GlobalChat(username):
+    os.system('cls' if os.name == 'nt' else 'clear')
     print("NOTE:- ENTER YOUR MESSAGE AFTER >> AND ENTER $_ TO EXIT... ")
     print(
         '''
@@ -99,7 +106,7 @@ def KahesiModeOnn(username):
         main()
 
 def ULogin():
-    print("UserName")
+    print("Username:")
     username = input()
     print("Password")
     password = input()
@@ -121,6 +128,7 @@ def DUser():
     pass
 
 def main():
+    os.system('cls' if os.name == 'nt' else 'clear')
     print("Hi there Welcome to Online Chating Room")
     print("Only benefit of this is no one knows you are here :):)")
     print("You have only 4 options, 3 of them are as follows and 4th is fuckoff")
@@ -137,4 +145,5 @@ def main():
         DUser()
     else:
         print("Sorry Wrong Choice, I guess you really like fucking around")
+        main()
 main()
