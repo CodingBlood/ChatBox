@@ -49,17 +49,41 @@ def NUser():
     print("New Used Has Been Created Successfully")
 
 
-def GlobalChat():
+def NewGlobalMessage(username, x):
     pass
 
 
-def KahesiModeOnn(username, password):
+def GlobalChat(username):
+    print("NOTE:- ENTER YOUR MESSAGE AFTER >> AND ENTER $_ TO EXIT... ")
+    print(
+        '''
+        =============================================================================================================================
+        |   GGGGGGGGGGGGG                                                       CCCCCCCCCCCCCC                                      |
+        |   GGGGGGGGGGGGG                                                       CCCCCCCCCCCCCC                                      |
+        |   GGG                                                                 CCC                                                 |
+        |   GGG                                                                 CCC                                                 |
+        |   GGG     GGGGG   LL        OOOOOOO   BBBBBB  AAAAAAAA    LL          CCC             HH    HH    AAAAAAA    TTTTTTTT     |
+        |   GGG     GGGGG   LL        O     O   B    B  A      A    LL          CCC             HH    HH    AA   AA       TT        |
+        |   GGG        GG   LL        O     O   BBBBBB  AAAAAAAA    LL          CCC             HHHHHHHH    AAAAAAA       TT        |
+        |   GGGGGGGGGGGGG   LL        O     O   B    B  A      A    LL          CCCCCCCCCCCCCC  HH    HH    AA   AA       TT        |
+        |   GGGGGGGGGGGGG   LLLLLLLL  OOOOOOO   BBBBBB  A      A    LLLLLLLL    CCCCCCCCCCCCCC  HH    HH    AA   AA       TT        |
+        =============================================================================================================================
+        ''')
+    x = ""
+    while x != "$_":
+        print(">>")
+        x = str(input())
+        NewGlobalMessage(username, x)
+    KahesiModeOnn(username)
+
+
+def KahesiModeOnn(username):
     print("We At ChatBox Welcome you to our Application")
     print("We are Continuously working on adding More and more features but till then you can enjoy our Global chat")
     print("Enter 1 to gain access to Global Chat")
     x = int(input())
     if x == 1:
-        GlobalChat()
+        GlobalChat(username)
 
 def ULogin():
     print("UserName")
@@ -71,7 +95,7 @@ def ULogin():
     for x in mydoc:
         if x["UPassword"] == password:
             print("LOGIN SUCCESSFUL!!!")
-            KahesiModeOnn(username,password)
+            KahesiModeOnn(username)
 
 
 def DUser():
