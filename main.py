@@ -76,6 +76,7 @@ def GlobalChat(username, ChangeStreamVaraible):
     if(ChangeStreamVaraible == 0):
         DeOrActivate(1)
         ChangeStreamVaraible += 1
+    print("NOTE:- ENTER YOUR MESSAGE AFTER >> AND ENTER $_ TO EXIT... ")
     while True:
         print(">>")
         x = str(input())
@@ -117,18 +118,35 @@ def ULogin():
 
 
 def DUser():
-    pass
+    main()
 
+
+def NSUser():
+    main()
+
+def NPuGrp():
+    main()
+
+
+def NPriGrp():
+    main()
+
+def FFinder():
+    main()
 
 def main():
     os.system('cls' if os.name == 'nt' else 'clear')
-    print("Hi there Welcome to Online Chating Room")
+    print("Hi there Welcome to Online Chatting Room")
     print("Only benefit of this is no one knows you are here :):)")
-    print("You have only 4 options, 3 of them are as follows and 4th is fuckoff")
+    print("Choose Wisely:---------------")
     print("1) New User")
     print("2) Login")
     print("3) Delete account")
-    print("Your Choice 1 or 2 or 3 or fuckoff : ")
+    print("4) New Super User")
+    print("5) New Public Group")
+    print("6) New Private Group")
+    print("7) Find Friend By Id")
+    print("My Dear Friend Enter Your Choice Here >> ")
     x = int(input())
     if x == 1:
         NUser()
@@ -136,6 +154,14 @@ def main():
         ULogin()
     elif x == 3:
         DUser()
+    elif x == 4:
+        NSUser()
+    elif x == 5:
+        NPuGrp()
+    elif x == 6:
+        NPriGrp()
+    elif x == 7:
+        FFinder()
     else:
         print("Sorry Wrong Choice, I guess you really like fucking around")
         main()

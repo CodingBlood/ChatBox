@@ -3,7 +3,7 @@ myclient = pymongo.MongoClient(
     "mongodb+srv://CodingBlood:kartik2002@cluster0.njrx7.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
 mydb = myclient["Chatbox"]
 mycol = mydb["GlobalChat"]
-print("NOTE:- ENTER YOUR MESSAGE AFTER >> AND ENTER $_ TO EXIT... ")
+
 print(
         '''
         =============================================================================================================================
