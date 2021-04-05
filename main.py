@@ -144,7 +144,16 @@ def NPriGrp():
     main()
 
 def FFinder():
-    main()
+    mycol = mydb["UserDetails"]
+    print("Username:")
+    username = input()
+    myquery = {"UName": username}
+    mydoc = mycol.find(myquery)
+    if len(mydoc[0]) == 0:
+        print("No Such User Found")
+    else:
+        print("Congratulations We Found your User!!!!")
+        print(mydoc[0]["UName"])
 
 
 def SuperKahesiModeOnn(username):
