@@ -4,6 +4,8 @@
 # ======================================================================================================================
 import pymongo
 import os
+import threading
+
 os.system('cls' if os.name == 'nt' else 'clear')
 myclient = pymongo.MongoClient(
     "mongodb+srv://CodingBlood:kartik2002@cluster0.njrx7.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
@@ -64,17 +66,74 @@ def Write_Message(iterate):
 
 def GlobalChat(username, ChangeStreamVaraible):
     os.system('cls' if os.name == 'nt' else 'clear')
-    if(ChangeStreamVaraible == 0):
-        os.startfile(r"ChangeStream.exe")
-        ChangeStreamVaraible += 1
-    print("NOTE:- ENTER YOUR MESSAGE AFTER >> AND ENTER $_ TO EXIT... ")
-    while True:
-        print(">>")
-        x = str(input())
-        if x != "$_":
-            NewGlobalMessage(username, x)
-        else:
-            KahesiModeOnn(username)
+    mydb = myclient["Chatbox"]
+    mycol = mydb["GlobalChat"]
+    print(
+        '''
+    =============================================================================================================================
+    |   GGGGGGGGGGGGG                                                       CCCCCCCCCCCCCC                                      |
+    |   GGGGGGGGGGGGG                                                       CCCCCCCCCCCCCC                                      |
+    |   GGG                                                                 CCC                                                 |
+    |   GGG                                                                 CCC                                                 |
+    |   GGG     GGGGG   LL        OOOOOOO   BBBBBB  AAAAAAAA    LL          CCC             HH    HH    AAAAAAA    TTTTTTTT     |
+    |   GGG     GGGGG   LL        O     O   B    B  A      A    LL          CCC             HH    HH    AA   AA       TT        |
+    |   GGG        GG   LL        O     O   BBBBBB  AAAAAAAA    LL          CCC             HHHHHHHH    AAAAAAA       TT        |
+    |   GGGGGGGGGGGGG   LL        O     O   B    B  A      A    LL          CCCCCCCCCCCCCC  HH    HH    AA   AA       TT        |
+    |   GGGGGGGGGGGGG   LLLLLLLL  OOOOOOO   BBBBBB  A      A    LLLLLLLL    CCCCCCCCCCCCCC  HH    HH    AA   AA       TT        |
+    =============================================================================================================================
+         ''')
+    x = ""
+    mydb = myclient["Chatbox"]
+    GChat = mydb["GlobalChat"]
+    for iterate in GChat.find({}, {"_id": 0, "UName": 1, "Message": 1}):
+        print(iterate["UName"].capitalize() + " : " + iterate["Message"])
+    def task1():
+        for change in mycol.watch([{'$match': {'operationType': {'$in': ['insert']}}}]):
+            print(change["fullDocument"]["UName"] + " : " + change["fullDocument"]["Message"])
+    # if(ChangeStreamVaraible == 0):
+    #     os.startfile(r"ChangeStream.exe")
+    #     ChangeStreamVaraible += 1
+    def task2():
+        while True:
+            x = str(input())
+            if x != "$_":
+                GChat = mydb["GlobalChat"]
+                mydict = {"UName": username, "Message": x}
+                temperory_variable = GChat.insert_one(mydict)
+            else:
+                KahesiModeOnn(username)
+
+    t1 = threading.Thread(target=task1, name='t1')
+    t2 = threading.Thread(target=task2, name='t2')
+    t1.start()
+    t2.start()
+    t2.join()
+
+def PuGrp(username):
+    print("Heyaaa!!!")
+    print("Public Chat Groups You have Joined Are As Follows")
+    pug_details = mydb["PublicChatGroups"]
+    for iterate in pug_details.find():
+        print(iterate["GName"] + " : " + iterate["Desc"])
+        print(iterate["Owner"] + " --- Origin : " + iterate["Origin"])
+        admins = ""
+        for i in iterate["Admins"]["username"]:
+            admins += i
+        print("Our Esteemed Admins >> " + admins)
+        members = ""
+        for i in iterate["Members"]["username"]:
+            members += i
+        print("Our Esteemed Members >> " + members)
+        print()
+        print()
+    print("Enter 1 To Join a new Group")
+    print("Enter Group Name To Chat")
+    x = input()
+    KahesiModeOnn(username)
+
+
+def PriGrp(username):
+    pass
 
 
 def KahesiModeOnn(username):
@@ -82,16 +141,22 @@ def KahesiModeOnn(username):
     print("We are Continuously working on adding More and more features but till then you can enjoy our Global chat")
     print("Enter 1 to gain access to Global Chat")
     print("Enter 2 to gain access to LOGOUT")
-    print("Enter 3 to create New Public Group")
-    print("Enter 4 to create New Private Group")
+    print("Enter 3 to go to your Public Chat Groups")
+    print("Enter 4 to go to your Public Chat Groups")
+    print("Enter 5 to create New Public Group")
+    print("Enter 6 to create New Private Group")
     x = int(input())
     if x == 1:
         GlobalChat(username, 0)
     elif x == 2:
         main()
     elif x == 3:
-        NPuGrp(username)
+        PuGrp(username)
     elif x == 4:
+        PriGrp(username)
+    elif x == 5:
+        NPuGrp(username)
+    elif x == 6:
         NPriGrp(username)
 
 
