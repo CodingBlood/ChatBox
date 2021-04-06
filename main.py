@@ -82,11 +82,17 @@ def KahesiModeOnn(username):
     print("We are Continuously working on adding More and more features but till then you can enjoy our Global chat")
     print("Enter 1 to gain access to Global Chat")
     print("Enter 2 to gain access to LOGOUT")
+    print("Enter 3 to create New Public Group")
+    print("Enter 4 to create New Private Group")
     x = int(input())
     if x == 1:
         GlobalChat(username, 0)
     elif x == 2:
         main()
+    elif x == 3:
+        NPuGrp(username)
+    elif x == 4:
+        NPriGrp(username)
 
 
 def ULogin():
@@ -136,11 +142,76 @@ def NSUser():
     print("New User Has Been Created Successfully")
     main()
 
-def NPuGrp():
+def NPuGrp(username):
+    print("Create A New Public Group Over Here")
+    print("Enter Name Of Your Group '$-' to go back")
+    GName = str(input())
+    if GName == '$-':
+        main()
+    myquery = {"Gname": GName}
+    mycol = mydb["PublicChatGroups"]
+    mydoc = mycol.find(myquery)
+    for x in mydoc:
+        res = not bool(x)
+        while not res:
+            print("Group with Same Name Already Exists")
+            NPuGrp(username)
+    print("Enter Description Of Your Group")
+    Desc = str(input())
+    print("Enter Place Of Group's Origin")
+    Origin = str(input())
+    mydict = {"GName": GName,
+              "Desc": Desc,
+              "Origin": Origin,
+              "Owner": username,
+              "Admins": {
+                  "username": [username]
+              },
+              "Members": {
+                  "username": [username]
+              },
+              "Chats": {
+                  username: "Booyahh! Welcome To My Own Public Group"
+              }
+              }
+    x = mycol.insert_one(mydict)
+    print("New Group Has Been Created Successfully")
     main()
 
-
-def NPriGrp():
+def NPriGrp(username):
+    print("Create A New Private Group Over Here")
+    print("Enter Name Of Your Group '$-' to go back")
+    GName = str(input())
+    myquery = {"Gname": GName, "Owner": username}
+    if GName == '$-':
+        main()
+    mycol = mydb["PrivateChatGroups"]
+    mydoc = mycol.find(myquery)
+    for x in mydoc:
+        res = not bool(x)
+        while not res:
+            print("Similar Group Already Exists Already Exists")
+            NPriGrp(username)
+    print("Enter Description Of Your Group")
+    Desc = str(input())
+    print("Enter Your Groups Security Key")
+    Skey = str(input())
+    mydict = {"GName": GName,
+              "Desc": Desc,
+              "SKey": Skey,
+              "Owner": username,
+              "Admins": {
+                  "username": [username]
+              },
+              "Members": {
+                  "username": [username]
+              },
+              "Chats": {
+                  username: "Booyahh! Welcome To My Own Public Group"
+              }
+              }
+    x = mycol.insert_one(mydict)
+    print("New Group Has Been Created Successfully")
     main()
 
 def FFinder():
@@ -160,18 +231,52 @@ def SuperKahesiModeOnn(username):
     print("Welcome Master. What can I show to please you...?")
     print("1) User Details")
     print("2) Super User Details")
-    print("3) Go Back")
+    print("3) Public Groups Details")
+    print("4) Private Groups Details")
+    print("5) Go Back")
     x = int(input())
     if x == 1:
-        Udetails = mydb["UserDetails"]
-        for iterate in Udetails.find({}, {"_id": 0, "UName": 1, "Message": 1}):
+        u_details = mydb["UserDetails"]
+        for iterate in u_details.find({}, {"_id": 0, "UName": 1, "UPassword": 1}):
             print(iterate["UName"].capitalize())
-            SuperKahesiModeOnn(username)
-    elif x ==2:
-        SUDetails = mydb["SuperUserDetails"]
-        for iterate in SUDetails.find({}, {"_id": 0, "UName": 1, "Message": 1}):
+        SuperKahesiModeOnn(username)
+    elif x == 2:
+        su_details = mydb["SuperUserDetails"]
+        for iterate in su_details.find({}, {"_id": 0, "UName": 1, "UPassword": 1}):
             print(iterate["UName"].capitalize())
-            SuperKahesiModeOnn(username)
+        SuperKahesiModeOnn(username)
+    elif x == 3:
+        pug_details = mydb["PublicChatGroups"]
+        for iterate in pug_details.find():
+            print(iterate["GName"] + " : " + iterate["Desc"])
+            print(iterate["Owner"] + " --- Origin : " + iterate["Origin"])
+            admins = ""
+            for i in iterate["Admins"]["username"]:
+                admins += i
+            print("Our Esteemed Admins >> " + admins)
+            members = ""
+            for i in iterate["Members"]["username"]:
+                members += i
+            print("Our Esteemed Members >> " + members)
+            print()
+            print()
+        SuperKahesiModeOnn(username)
+    elif x == 4:
+        prg_details = mydb["PrivateChatGroups"]
+        for iterate in prg_details.find():
+            print(iterate["GName"] + " : " + iterate["Desc"])
+            print(iterate["Owner"] )
+            admins = ""
+            for i in iterate["Admins"]["username"]:
+                admins += i
+            print("Our Esteemed Admins >> " + admins)
+            members = ""
+            for i in iterate["Members"]["username"]:
+                members += i
+            print("Our Esteemed Members >> " + members)
+            print()
+            print()
+        SuperKahesiModeOnn(username)
     else:
         main()
 
@@ -205,9 +310,7 @@ def main():
     print("3) Login Super User")
     print("4) Delete account")
     print("5) New Super User")
-    print("6) New Public Group")
-    print("7) New Private Group")
-    print("8) Find Friend By Id")
+    print("6) Find Friend By Id")
     print("My Dear Friend Enter Your Choice Here >> ")
     x = int(input())
     if x == 1:
@@ -221,10 +324,6 @@ def main():
     elif x == 5:
         NSUser()
     elif x == 6:
-        NPuGrp()
-    elif x == 7:
-        NPriGrp()
-    elif x == 8:
         FFinder()
     else:
         print("Sorry Wrong Choice, I guess you really like fucking around")
