@@ -4,6 +4,7 @@
 # ======================================================================================================================
 import pymongo
 import os
+import subprocess
 import threading
 
 os.system('cls' if os.name == 'nt' else 'clear')
@@ -65,49 +66,12 @@ def Write_Message(iterate):
 
 
 def GlobalChat(username, ChangeStreamVaraible):
-    os.system('cls' if os.name == 'nt' else 'clear')
-    mydb = myclient["Chatbox"]
-    mycol = mydb["GlobalChat"]
-    print(
-        '''
-    =============================================================================================================================
-    |   GGGGGGGGGGGGG                                                       CCCCCCCCCCCCCC                                      |
-    |   GGGGGGGGGGGGG                                                       CCCCCCCCCCCCCC                                      |
-    |   GGG                                                                 CCC                                                 |
-    |   GGG                                                                 CCC                                                 |
-    |   GGG     GGGGG   LL        OOOOOOO   BBBBBB  AAAAAAAA    LL          CCC             HH    HH    AAAAAAA    TTTTTTTT     |
-    |   GGG     GGGGG   LL        O     O   B    B  A      A    LL          CCC             HH    HH    AA   AA       TT        |
-    |   GGG        GG   LL        O     O   BBBBBB  AAAAAAAA    LL          CCC             HHHHHHHH    AAAAAAA       TT        |
-    |   GGGGGGGGGGGGG   LL        O     O   B    B  A      A    LL          CCCCCCCCCCCCCC  HH    HH    AA   AA       TT        |
-    |   GGGGGGGGGGGGG   LLLLLLLL  OOOOOOO   BBBBBB  A      A    LLLLLLLL    CCCCCCCCCCCCCC  HH    HH    AA   AA       TT        |
-    =============================================================================================================================
-         ''')
-    x = ""
-    mydb = myclient["Chatbox"]
-    GChat = mydb["GlobalChat"]
-    for iterate in GChat.find({}, {"_id": 0, "UName": 1, "Message": 1}):
-        print(iterate["UName"].capitalize() + " : " + iterate["Message"])
-    def task1():
-        for change in mycol.watch([{'$match': {'operationType': {'$in': ['insert']}}}]):
-            print(change["fullDocument"]["UName"] + " : " + change["fullDocument"]["Message"])
-    # if(ChangeStreamVaraible == 0):
-    #     os.startfile(r"ChangeStream.exe")
-    #     ChangeStreamVaraible += 1
-    def task2():
-        while True:
-            x = str(input())
-            if x != "$_":
-                GChat = mydb["GlobalChat"]
-                mydict = {"UName": username, "Message": x}
-                temperory_variable = GChat.insert_one(mydict)
-            else:
-                KahesiModeOnn(username)
-
-    t1 = threading.Thread(target=task1, name='t1')
-    t2 = threading.Thread(target=task2, name='t2')
-    t1.start()
-    t2.start()
-    t2.join()
+    import ChangeStream
+    ChangeStream.main(username)
+    # import os
+    # os.system("exec ChangeStream")
+    # subprocess.call(['python', 'ChangeStream.py'])
+    KahesiModeOnn(username)
 
 def PuGrp(username):
     print("Heyaaa!!!")
