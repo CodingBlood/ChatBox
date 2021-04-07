@@ -66,11 +66,11 @@ def Write_Message(iterate):
 
 
 def GlobalChat(username, ChangeStreamVaraible):
-    import ChangeStream
-    ChangeStream.main(username)
+    import GlobalChat
+    GlobalChat.main(username)
     # import os
     # os.system("exec ChangeStream")
-    # subprocess.call(['python', 'ChangeStream.py'])
+    # subprocess.call(['python', 'GlobalChat.py'])
     KahesiModeOnn(username)
 
 def PuGrp(username):
@@ -93,6 +93,9 @@ def PuGrp(username):
     print("Enter 1 To Join a new Group")
     print("Enter Group Name To Chat")
     x = input()
+    import PublicChats
+    PublicChats.main(username, x)
+
     KahesiModeOnn(username)
 
 
@@ -199,9 +202,12 @@ def NPuGrp(username):
               "Members": {
                   "username": [username]
               },
-              "Chats": {
-                  username: "Booyahh! Welcome To My Own Public Group"
-              }
+              "Chats": [
+                  {
+                      "username": username,
+                      "Message": "Booyahh! Welcome To My Own Public Group"
+                  }
+              ]
               }
     x = mycol.insert_one(mydict)
     print("New Group Has Been Created Successfully")
