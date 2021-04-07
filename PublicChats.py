@@ -48,11 +48,5 @@ def main(username, x):
 
     t1 = KThread(target=task1)
     t1.start()
-    # print("here")
     task2()
-    # print("here1")
-    # print("here")
     t1.kill()
-    # t2.start()
-    # t2.join()
-    # print(t1.is_alive())
