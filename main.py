@@ -119,10 +119,25 @@ def PuGrp(username):
                     return 1
             return 0
         if Group_Exists(x):
-            #Going To Private Chat Group
-            import PublicChats
-            PublicChats.main(username, x)
-            KahesiModeOnn(username)
+            #check Weather User Is member Or Not
+            def mem_or_not(username):
+                for iterate in pug_details.find():
+                    if iterate["GName"] == x:
+                        for i in iterate["Members"]["username"]:
+                            if i['username'] == username:
+                                return 1
+                        return 0
+                return 0
+            if mem_or_not(username):
+                #Going To Public Chat Group
+                import PublicChats
+                PublicChats.main(username, x)
+                KahesiModeOnn(username)
+            else:
+                print("=============================================")
+                print("Sorry User You Need to Join This Group First")
+                print("=============================================")
+                PuGrp(username)
         else:
             #Redirecting Back to PuGrp function
             print("Sorry No Such Group Exists! But You Can Always Create One")
@@ -166,7 +181,7 @@ def KahesiModeOnn(username):
     print("Enter 1 to gain access to Global Chat")
     print("Enter 2 to gain access to LOGOUT")
     print("Enter 3 to go to your Public Chat Groups")
-    print("Enter 4 to go to your Public Chat Groups")
+    print("Enter 4 to go to your Private Chat Groups")
     print("Enter 5 to create New Public Group")
     print("Enter 6 to create New Private Group")
     x = int(input())
@@ -250,7 +265,10 @@ def NPuGrp(username):
                   "username": [username]
               },
               "Members": {
-                  "username": [username]
+                  "username": [{
+                      "username": username,
+                  }
+                  ]
               },
               "Chats": [
                   {
