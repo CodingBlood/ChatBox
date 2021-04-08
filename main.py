@@ -6,14 +6,11 @@ import pymongo
 import os
 import subprocess
 import threading
-
 os.system('cls' if os.name == 'nt' else 'clear')
 myclient = pymongo.MongoClient(
     "mongodb+srv://CodingBlood:kartik2002@cluster0.njrx7.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
 mydb = myclient["Chatbox"]
 mycol = mydb["UserDetails"]
-
-
 # ======================================================================================================================
 # mydict = { "UName": "KahesiBot4", "UPassword": "GrippenBot4" }
 # x = mycol.insert_one(mydict)
@@ -30,8 +27,6 @@ mycol = mydb["UserDetails"]
 # for x in mydoc:
 #   print(x)
 # ======================================================================================================================
-
-
 def NUser():
     print("No personal data required we dont wanna know who and why you are")
     print("UserName Or '$-' to go back")
@@ -51,20 +46,14 @@ def NUser():
     x = mycol.insert_one(mydict)
     print("New User Has Been Created Successfully")
     main()
-
-
 def NewGlobalMessage(username, x):
     mydb = myclient["Chatbox"]
     GChat = mydb["GlobalChat"]
     mydict = {"UName": username, "Message": x}
     temperory_variable = GChat.insert_one(mydict)
     GlobalChat(username, 1)
-
-
 def Write_Message(iterate):
     print(iterate["UName"].capitalize() + " : " + iterate["Message"])
-
-
 def GlobalChat(username, ChangeStreamVaraible):
     import GlobalChat
     GlobalChat.main(username)
@@ -72,7 +61,6 @@ def GlobalChat(username, ChangeStreamVaraible):
     # os.system("exec ChangeStream")
     # subprocess.call(['python', 'GlobalChat.py'])
     KahesiModeOnn(username)
-
 def PuGrp(username):
     print("Heyaaa!!!")
     print("Public Chat Groups You have Joined Are As Follows")
@@ -97,12 +85,33 @@ def PuGrp(username):
     PublicChats.main(username, x)
 
     KahesiModeOnn(username)
-
-
 def PriGrp(username):
-    pass
-
-
+    print("Heyaaa!!!")
+    print("Private Chat Groups You have Joined Are As Follows")
+    prg_details = mydb["PrivateChatGroups"]
+    for iterate in prg_details.find():
+        print(iterate["GName"] + " : " + iterate["Desc"])
+        print(iterate["Owner"])
+        admins = ""
+        for i in iterate["Admins"]["username"]:
+            admins += i
+        print("Our Esteemed Admins >> " + admins)
+        members = ""
+        for i in iterate["Members"]["username"]:
+            members += i
+        print("Our Esteemed Members >> " + members)
+        print()
+        print()
+    print("Enter 1 To Join a new Group")
+    print("Enter Group Name To Chat")
+    x = input()
+    # for iterate in prg_details.find():
+    #     if iterate["SKey"]:
+    #
+    # if x ==
+    import PrivateChats
+    PrivateChats.main(username, x)
+    KahesiModeOnn(username)
 def KahesiModeOnn(username):
     print("We At ChatBox Welcome you to our Application")
     print("We are Continuously working on adding More and more features but till then you can enjoy our Global chat")
@@ -125,8 +134,6 @@ def KahesiModeOnn(username):
         NPuGrp(username)
     elif x == 6:
         NPriGrp(username)
-
-
 def ULogin():
     print("Username:")
     username = input()
@@ -143,12 +150,8 @@ def ULogin():
             print()
             print()
             main()
-
-
 def DUser():
     main()
-
-
 def NSUser():
     print("Enter Security Key Now!! >> ")
     security_key = str(input())
@@ -173,7 +176,6 @@ def NSUser():
     x = mycol.insert_one(mydict)
     print("New User Has Been Created Successfully")
     main()
-
 def NPuGrp(username):
     print("Create A New Public Group Over Here")
     print("Enter Name Of Your Group '$-' to go back")
@@ -212,7 +214,6 @@ def NPuGrp(username):
     x = mycol.insert_one(mydict)
     print("New Group Has Been Created Successfully")
     main()
-
 def NPriGrp(username):
     print("Create A New Private Group Over Here")
     print("Enter Name Of Your Group '$-' to go back")
@@ -241,14 +242,16 @@ def NPriGrp(username):
               "Members": {
                   "username": [username]
               },
-              "Chats": {
-                  username: "Booyahh! Welcome To My Own Public Group"
-              }
+              "Chats": [
+                  {
+                      "username": username,
+                      "Message": "Booyahh! Welcome To My Own Public Group"
+                  }
+              ]
               }
     x = mycol.insert_one(mydict)
     print("New Group Has Been Created Successfully")
     main()
-
 def FFinder():
     mycol = mydb["UserDetails"]
     print("Username:")
@@ -260,8 +263,6 @@ def FFinder():
     else:
         print("Congratulations We Found your User!!!!")
         print(mydoc[0]["UName"])
-
-
 def SuperKahesiModeOnn(username):
     print("Welcome Master. What can I show to please you...?")
     print("1) User Details")
@@ -314,8 +315,6 @@ def SuperKahesiModeOnn(username):
         SuperKahesiModeOnn(username)
     else:
         main()
-
-
 def SULogin():
     mycol = mydb["SuperUserDetails"]
     print("Username:")
@@ -333,8 +332,6 @@ def SULogin():
             print()
             print()
             main()
-
-
 def main():
     os.system('cls' if os.name == 'nt' else 'clear')
     print("Hi there Welcome to Online Chatting Room")
@@ -363,6 +360,4 @@ def main():
     else:
         print("Sorry Wrong Choice, I guess you really like fucking around")
         main()
-
-
 main()
