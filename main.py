@@ -66,25 +66,73 @@ def PuGrp(username):
     print("Public Chat Groups You have Joined Are As Follows")
     pug_details = mydb["PublicChatGroups"]
     for iterate in pug_details.find():
-        print(iterate["GName"] + " : " + iterate["Desc"])
-        print(iterate["Owner"] + " --- Origin : " + iterate["Origin"])
-        admins = ""
-        for i in iterate["Admins"]["username"]:
-            admins += i
-        print("Our Esteemed Admins >> " + admins)
-        members = ""
-        for i in iterate["Members"]["username"]:
-            members += i
-        print("Our Esteemed Members >> " + members)
-        print()
-        print()
+        for member in iterate["Members"]['username']:
+            if member['username'] == username:
+                print(iterate["GName"] + " : " + iterate["Desc"])
+                print(iterate["Owner"] + " --- Origin : " + iterate["Origin"])
+                admins = ""
+                for i in iterate["Admins"]["username"]:
+                    admins += i
+                print("Our Esteemed Admins >> " + admins)
+                members = ""
+                for i in iterate["Members"]["username"]:
+                    members += '  '
+                    members += i['username']
+                print("Our Esteemed Members >> " + members)
+                print()
     print("Enter 1 To Join a new Group")
+    print("Enter 2 to go Back")
     print("Enter Group Name To Chat")
     x = input()
-    import PublicChats
-    PublicChats.main(username, x)
-
-    KahesiModeOnn(username)
+    if x == '1':
+        for iterate in pug_details.find():
+            print(iterate["GName"] + " : " + iterate["Desc"])
+            print(iterate["Owner"] + " --- Origin : " + iterate["Origin"])
+            admins = ""
+            for i in iterate["Admins"]["username"]:
+                admins += i
+            print("Our Esteemed Admins >> " + admins)
+            members = ""
+            for i in iterate["Members"]["username"]:
+                members += ' , '
+                members += i['username']
+            print("Our Esteemed Members >> " + members)
+            print()
+        print("Enter Group Name To Join")
+        y = input()
+        def add_member(x, username):
+            if x == iterate["GName"]:
+                mydict = {'username': username}
+                PChat = mydb["PublicChatGroups"]
+                document = dict(PChat.find_one({'GName': x}))
+                document['Members']['username'].append(mydict)
+                PChat.update({'GName': x}, document)
+        add_member(y, username)
+        PuGrp(username)
+    elif x == '2':
+        KahesiModeOnn(username)
+    else:
+        # Check Weather Such Group Exist or Not
+        def Group_Exists(x):
+            for iterate in pug_details.find():
+                if x == iterate["GName"]:
+                    return 1
+            return 0
+        if Group_Exists(x):
+            #Going To Private Chat Group
+            import PublicChats
+            PublicChats.main(username, x)
+            KahesiModeOnn(username)
+        else:
+            #Redirecting Back to PuGrp function
+            print("Sorry No Such Group Exists! But You Can Always Create One")
+            print("Enter 1) Create A New Public Group")
+            print("Enter 2) to go back")
+            choice = input()
+            if choice == 1:
+                NPuGrp(username)
+            else:
+                PuGrp(username)
 def PriGrp(username):
     print("Heyaaa!!!")
     print("Private Chat Groups You have Joined Are As Follows")
