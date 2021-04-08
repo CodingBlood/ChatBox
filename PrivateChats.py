@@ -19,7 +19,7 @@ def main(username, x):
             print("Our Esteemed Admins >> " + admins)
             members = ""
             for i in iterate["Members"]["username"]:
-                members += i
+                members += i['username']
             print("Our Esteemed Members >> " + members)
             print()
             print()
