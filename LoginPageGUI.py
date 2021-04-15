@@ -22,26 +22,76 @@ def main():
                 def Gchat():
                     import GlobalChatGUI
                     GlobalChatGUI.main(str(name))
+                def PuGrp():
+                    sb1.destroy()
+                    sl1.destroy()
+                    sl2.destroy()
+                    sl3.destroy()
+                    sl4.destroy()
+                    def PuGrpChat():
+                        import PublicChatGUI
+                        PublicChatGUI.main(Gname, name)
+                    #===========================================================================================================================
+                    #===========================================================================================================================
+                    #===========================================================================================================================
+                    #================NOT WORKING================================================================================================
+                    # def JoinGrp():
+                    #
+                    join = Button(root1, text='+', bg=color["nero"], fg=color["orange"],
+                                 font=('Malgun Gothic Semilight', 15), width=2, bd=5, height=1, command=PuGrpChat)
+                    canvas1.create_window(65, 190, anchor="nw", window=join)
+                    #===========================================================================================================================
+                    #===========================================================================================================================
+                    #===========================================================================================================================
+                    #===========================================================================================================================
+                    pug_details = mydb["PublicChatGroups"]
+                    b=245
+                    turn=0
+                    for iterate in pug_details.find():
+                        for member in iterate["Members"]['username']:
+                            if member['username'] == name:
+                                Gname = iterate["GName"]
+                                pgrp = Button(root1, text=iterate["GName"], bg=color["nero"], fg=color["orange"],
+                                              font=('Malgun Gothic Semilight', 25, "bold"), width=500, height=100, bd=5,image=login,
+                                              compound=LEFT, anchor="nw", command=PuGrpChat)
+                                if turn >= 3:
+                                    m = 700
+                                else:
+                                    m = 100
+                                canvas1.create_window(m, b, anchor="nw", window=pgrp)
+                                b += 120
+                                turn += 1
+
+
+
+                def PrGrp():
+                    import GlobalChatGUI
+                    GlobalChatGUI.main(str(name))
+                def NPuGrp():
+                    import GlobalChatGUI
+                    GlobalChatGUI.main(str(name))
+                def NPriGrp():
+                    import GlobalChatGUI
+                    GlobalChatGUI.main(str(name))
                 sb1 = Button(root1, text='  Global Chat', bg=color["nero"], fg=color["orange"],
                             font=('Malgun Gothic Semilight', 25, "bold"), width=500, height=100, bd=5, image=login,
                             compound=LEFT,anchor="nw", command=Gchat)
-                # canvas1.create_text(100, 245, "Username", width=50, height=1, fg=color["orange"])
                 sl1 = Button(root1, text='  Public Chat Groups', bg=color["nero"], fg=color["orange"],
                             font=('Malgun Gothic Semilight', 25, "bold"), width=500, height=100, bd=5, image=login,
                             compound=LEFT,
-                            anchor="nw", command=some)
+                            anchor="nw", command=PuGrp)
                 sl2 = Button(root1, text='  Private Chat Groups', bg=color["nero"], fg=color["orange"],
                             font=('Malgun Gothic Semilight', 25, "bold"), width=500, height=100, bd=5, image=login,
                             compound=LEFT,
-                            anchor="nw", command=some)
+                            anchor="nw", command=PrGrp)
                 sl3 = Button(root1, text='  New Public Group', bg=color["nero"], fg=color["orange"],
                             font=('Malgun Gothic Semilight', 25, "bold"), width=500, height=100, bd=5, image=login,
                             compound=LEFT,
-                            anchor="nw", command=some)
+                            anchor="nw", command=NPuGrp)
                 sl4 = Button(root1, text='  New Private Group', bg=color["nero"], fg=color["orange"],
                             font=('Malgun Gothic Semilight', 25, "bold"), width=500, height=100, bd=5, image=login,
                             compound=LEFT,
-                            anchor="nw", command=some)
+                            anchor="nw", command=NPriGrp)
                 canvas1.create_window(400, 495, anchor="nw", window=sb1)
                 canvas1.create_window(700, 245, anchor="nw", window=sl1)
                 canvas1.create_window(700, 370, anchor="nw", window=sl2)
