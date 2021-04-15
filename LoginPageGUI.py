@@ -1,13 +1,12 @@
 from tkinter import *
 import pymongo
+import time
 myclient = pymongo.MongoClient(
     "mongodb+srv://CodingBlood:kartik2002@cluster0.njrx7.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
 mydb = myclient["Chatbox"]
 mycol = mydb["UserDetails"]
 def main():
     def some():
-        # global userid
-        # global paswrd
         name = userid.get()
         pass_wrd = paswrd.get()
         myquery = {"UName": name}
@@ -15,10 +14,39 @@ def main():
         for x in mydoc:
             if x["UPassword"] == pass_wrd:
                 print("Login Successful")
-                # Button(root1, text="Login Successful Click To Proceed", width=100, height=2, bd=5,)
+                l1.destroy()
+                l2.destroy()
+                l3.destroy()
+                l4.destroy()
+                b1.destroy()
+                sb1 = Button(root1, text='  Global Chat', bg=color["nero"], fg=color["orange"],
+                            font=('Malgun Gothic Semilight', 25, "bold"), width=500, height=100, bd=5, image=login,
+                            compound=LEFT,
+                            anchor="nw", command=some)
+                # canvas1.create_text(100, 245, "Username", width=50, height=1, fg=color["orange"])
+                sl1 = Button(root1, text='  Public Chat Groups', bg=color["nero"], fg=color["orange"],
+                            font=('Malgun Gothic Semilight', 25, "bold"), width=500, height=100, bd=5, image=login,
+                            compound=LEFT,
+                            anchor="nw", command=some)
+                sl2 = Button(root1, text='  Private Chat Groups', bg=color["nero"], fg=color["orange"],
+                            font=('Malgun Gothic Semilight', 25, "bold"), width=500, height=100, bd=5, image=login,
+                            compound=LEFT,
+                            anchor="nw", command=some)
+                sl3 = Button(root1, text='  New Public Group', bg=color["nero"], fg=color["orange"],
+                            font=('Malgun Gothic Semilight', 25, "bold"), width=500, height=100, bd=5, image=login,
+                            compound=LEFT,
+                            anchor="nw", command=some)
+                sl4 = Button(root1, text='  New Private Group', bg=color["nero"], fg=color["orange"],
+                            font=('Malgun Gothic Semilight', 25, "bold"), width=500, height=100, bd=5, image=login,
+                            compound=LEFT,
+                            anchor="nw", command=some)
+                canvas1.create_window(400, 495, anchor="nw", window=sb1)
+                canvas1.create_window(700, 245, anchor="nw", window=sl1)
+                canvas1.create_window(700, 370, anchor="nw", window=sl2)
+                canvas1.create_window(100, 245, anchor="nw", window=sl3)
+                canvas1.create_window(100, 370, anchor="nw", window=sl4)
             else:
                 print("Login Failed")
-                # Button(root1, text="Login Failed Retry...", width=100, height=2, bd=5)
         userid.set("")
         paswrd.set("")
     def switch():
@@ -88,7 +116,7 @@ def main():
     paswrd = StringVar()
     brandLabel = Label(root1, text="", font="System 30", bg="gray17", fg="green")
     brandLabel.place(x=100, y=250)
-    b1 = Button(root1, text='   Login', bg=color["nero"], fg=color["orange"],
+    b1 = Button(root1, text='             Login', bg=color["nero"], fg=color["orange"],
                 font=('Malgun Gothic Semilight', 25, "bold"), width=500, height=100, bd=5, image=login, compound=LEFT,
                 anchor="nw", command=some)
     # canvas1.create_text(100, 245, "Username", width=50, height=1, fg=color["orange"])
@@ -96,8 +124,6 @@ def main():
     l2 = Entry(root1,font=('Malgun Gothic Semilight', 25, "bold"),bd=5, textvariable=paswrd, show='*')
     l3 = Label(root1, text='UserName', width=15, height=1, font=('Malgun Gothic Semilight', 25, "bold"),bd=5)
     l4 = Label(root1, text='Password', width=15, height=1, font=('Malgun Gothic Semilight', 25, "bold"),bd=5)
-    # e1 = Entry(l1, bd=5)
-    # e2 = Entry(l2, bd=5)
     canvas1.create_window(300, 495, anchor="nw", window=b1)
     canvas1.create_window(700, 245, anchor="nw", window=l1)
     canvas1.create_window(700, 370, anchor="nw", window=l2)
