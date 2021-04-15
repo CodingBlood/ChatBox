@@ -146,13 +146,6 @@
 
 
 
-
-# root.geometry("400x600+850+50")
-
-
-
-
-
 # setting switch function:
 def switch():
     global btnState
@@ -166,14 +159,14 @@ def switch():
         brandLabel.config(bg="gray17", fg="green")
         homeLabel.config(bg=color["orange"])
         topFrame.config(bg=color["orange"])
-        root.config(bg="gray17")
+        # root.config(bg="gray17")
 
         # turning button OFF:
         btnState = False
     else:
         # make root dim:
         brandLabel.config(bg=color["nero"], fg="#5F5A33")
-        homeLabel.config(bg=color["nero"])
+        # homeLabel.config(bg=color["nero"])
         topFrame.config(bg=color["nero"])
         root.config(bg=color["nero"])
 
@@ -185,17 +178,6 @@ def switch():
         # turing button ON:
         btnState = True
 
-
-# window in mainloop:
-# root.mainloop()
-
-
-
-
-
-
-
-from tkinter import PhotoImage
 from tkinter import *
 root =Tk()
 root.geometry("1300x700")
@@ -227,18 +209,18 @@ canvas1.create_window(0,0, anchor="nw", window=topFrame, width="1300", height="1
 # topFrame.pack(side="top", fill=X)
 
 # Header label text:
-homeLabel = Label(topFrame, text="Chat Box", font="Bahnschrift 65", bg=color["orange"], fg="gray17", height=2, padx=20)
+homeLabel = Label(topFrame, text="Chat Box", font="Bahnschrift 95", bg=color["orange"], fg="gray17", height=2, padx=20)
 homeLabel.pack(side="right")
 
 # Main label text:
 brandLabel = Label(root, text="", font="System 30", bg="gray17", fg="green")
 brandLabel.place(x=100, y=250)
-b1=Button(root, text='   New User', font=('Malgun Gothic Semilight', 25, "bold"), width=500, height=100, bd=5, image=signup, compound = LEFT, anchor="nw")
-b2=Button(root, text='   Login',  font=('Malgun Gothic Semilight', 25, "bold"), width=500, height=100, bd=5, image=login, compound = LEFT, anchor="nw")
-b3=Button(root, text='   Login Super User',  font=('Malgun Gothic Semilight', 25, "bold"), width=500, height=100, bd=5, image=login, compound = LEFT, anchor="nw")
-b4=Button(root, text='   Delete account',  font=('Malgun Gothic Semilight', 25, "bold"), width=500, height=100, bd=5, image=delete, compound = LEFT, anchor="nw")
-b5=Button(root, text='   New Super User',  font=('Malgun Gothic Semilight', 25, "bold"), width=500, height=100, bd=5, image=signup, compound = LEFT, anchor="nw")
-b6=Button(root, text='   Find Friend By Id',  font=('Malgun Gothic Semilight', 25, "bold"), width=500, height=100, bd=5, image=find, compound = LEFT, anchor="nw")
+b1=Button(root, text='   New User', bg=color["nero"], fg=color["orange"], font=('Malgun Gothic Semilight', 25, "bold"), width=500, height=100, bd=5, image=signup, compound = LEFT, anchor="nw")
+b2=Button(root, text='   Login', bg=color["nero"], fg=color["orange"],  font=('Malgun Gothic Semilight', 25, "bold"), width=500, height=100, bd=5, image=login, compound = LEFT, anchor="nw")
+b3=Button(root, text='   Login Super User',  bg=color["nero"], fg=color["orange"], font=('Malgun Gothic Semilight', 25, "bold"), width=500, height=100, bd=5, image=login, compound = LEFT, anchor="nw")
+b4=Button(root, text='   Delete account', bg=color["nero"], fg=color["orange"],  font=('Malgun Gothic Semilight', 25, "bold"), width=500, height=100, bd=5, image=delete, compound = LEFT, anchor="nw")
+b5=Button(root, text='   New Super User', bg=color["nero"], fg=color["orange"],  font=('Malgun Gothic Semilight', 25, "bold"), width=500, height=100, bd=5, image=signup, compound = LEFT, anchor="nw")
+b6=Button(root, text='   Find Friend By Id', bg=color["nero"], fg=color["orange"], font=('Malgun Gothic Semilight', 25, "bold"), width=500, height=100, bd=5, image=find, compound = LEFT, anchor="nw")
 canvas1.create_window(100, 370, anchor="nw", window=b1)
 canvas1.create_window(100, 245, anchor="nw", window=b2)
 canvas1.create_window(700, 245, anchor="nw", window=b3)
