@@ -178,6 +178,7 @@ def switch():
         # turing button ON:
         btnState = True
 
+
 from tkinter import *
 root =Tk()
 root.geometry("1300x700")
@@ -213,10 +214,11 @@ homeLabel = Label(topFrame, text="Chat Box", font="Bahnschrift 95", bg=color["or
 homeLabel.pack(side="right")
 
 # Main label text:
+import LoginPageGUI
 brandLabel = Label(root, text="", font="System 30", bg="gray17", fg="green")
 brandLabel.place(x=100, y=250)
 b1=Button(root, text='   New User', bg=color["nero"], fg=color["orange"], font=('Malgun Gothic Semilight', 25, "bold"), width=500, height=100, bd=5, image=signup, compound = LEFT, anchor="nw")
-b2=Button(root, text='   Login', bg=color["nero"], fg=color["orange"],  font=('Malgun Gothic Semilight', 25, "bold"), width=500, height=100, bd=5, image=login, compound = LEFT, anchor="nw")
+b2=Button(root, text='   Login', command=LoginPageGUI.main, bg=color["nero"], fg=color["orange"],  font=('Malgun Gothic Semilight', 25, "bold"), width=500, height=100, bd=5, image=login, compound = LEFT, anchor="nw")
 b3=Button(root, text='   Login Super User',  bg=color["nero"], fg=color["orange"], font=('Malgun Gothic Semilight', 25, "bold"), width=500, height=100, bd=5, image=login, compound = LEFT, anchor="nw")
 b4=Button(root, text='   Delete account', bg=color["nero"], fg=color["orange"],  font=('Malgun Gothic Semilight', 25, "bold"), width=500, height=100, bd=5, image=delete, compound = LEFT, anchor="nw")
 b5=Button(root, text='   New Super User', bg=color["nero"], fg=color["orange"],  font=('Malgun Gothic Semilight', 25, "bold"), width=500, height=100, bd=5, image=signup, compound = LEFT, anchor="nw")
@@ -240,9 +242,9 @@ Label(navRoot, font="Bahnschrift 15", bg=color["orange"], fg="black", height=2, 
 # set y-coordinate of Navbar widgets:
 y = 180
 # option in the navbar:
-options = ["Profile", "Settings", "Help", "About", "Feedback"]
+options = ["Login", "Login Super User", "New User", "New Super User", "Find Friend By Id", "Delete account"]
 # Navbar Option Buttons:
-for i in range(5):
+for i in range(6):
     Button(navRoot, text=options[i], font="BahnschriftLight 15", bg="gray17", fg=color["orange"], activebackground="gray17", activeforeground="green", bd=0).place(x=25, y=y)
     y += 40
 
