@@ -19,10 +19,12 @@ def main():
                 l3.destroy()
                 l4.destroy()
                 b1.destroy()
+                def Gchat():
+                    import GlobalChatGUI
+                    GlobalChatGUI.main(str(name))
                 sb1 = Button(root1, text='  Global Chat', bg=color["nero"], fg=color["orange"],
                             font=('Malgun Gothic Semilight', 25, "bold"), width=500, height=100, bd=5, image=login,
-                            compound=LEFT,
-                            anchor="nw", command=some)
+                            compound=LEFT,anchor="nw", command=Gchat)
                 # canvas1.create_text(100, 245, "Username", width=50, height=1, fg=color["orange"])
                 sl1 = Button(root1, text='  Public Chat Groups', bg=color["nero"], fg=color["orange"],
                             font=('Malgun Gothic Semilight', 25, "bold"), width=500, height=100, bd=5, image=login,
