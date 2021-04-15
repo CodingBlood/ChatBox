@@ -28,9 +28,9 @@ def main():
                     sl2.destroy()
                     sl3.destroy()
                     sl4.destroy()
-                    def PuGrpChat():
+                    def PuGrpChat(Grpname):
                         import PublicChatGUI
-                        PublicChatGUI.main(Gname, name)
+                        PublicChatGUI.main(Grpname, name)
                     #===========================================================================================================================
                     #===========================================================================================================================
                     #===========================================================================================================================
@@ -53,7 +53,8 @@ def main():
                                 Gname = iterate["GName"]
                                 pgrp = Button(root1, text=iterate["GName"], bg=color["nero"], fg=color["orange"],
                                               font=('Malgun Gothic Semilight', 25, "bold"), width=500, height=100, bd=5,image=login,
-                                              compound=LEFT, anchor="nw", command=PuGrpChat)
+                                              compound=LEFT,
+                                              anchor="nw", command=lambda Grpname=Gname: PuGrpChat(Grpname))
                                 if turn >= 3:
                                     m = 700
                                 else:
