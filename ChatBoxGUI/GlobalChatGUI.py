@@ -3,30 +3,32 @@ from ChatBox.KThread import *
 import pymongo
 myclient = pymongo.MongoClient("mongodb+srv://CodingBlood:kartik2002@cluster0.njrx7.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
 mydb = myclient["Chatbox"]
-mycol = mydb["UserDetails"]
 def main(username):
     def some():
         x = message.get()
         message.set("")
         tasks(x)
     def tasks(x):
-        def task1():
-            mycol = mydb["GlobalChat"]
-            for change in mycol.watch([{'$match': {'operationType': {'$in': ['insert']}}}]):
-                # print(change)
-                t.insert(END, change["fullDocument"]["UName"] + " : " + change["fullDocument"]["Message"] + "\n")
-                # print("ended")
-                break
-            return 0
         def task2():
             GChat = mydb["GlobalChat"]
             mydict = {"UName": str(username), "Message": x}
             GChat.insert_one(mydict)
             return 0
-        t1 = KThread(target=task1)
-        # t1.setDaemon(True)
-        t1.start()
+
         task2()
+    def task1():
+        mydb = myclient["Chatbox"]
+        mycol = mydb["GlobalChat"]
+        for change in mycol.watch([{'$match': {'operationType': {'$in': ['insert']}}}]):
+            # print(change)
+            t.insert(END, change["fullDocument"]["UName"] + " : " + change["fullDocument"]["Message"] + "\n")
+            # print("ended")
+            # break
+        return 0
+
+    t1 = KThread(target=task1)
+    # t1.setDaemon(True)
+    t1.start()
     root1 = Toplevel()
     root1.geometry("1300x700")
     color = {"nero": "#252726", "orange": "#FF8700", "darkorange": "#FE6101"}

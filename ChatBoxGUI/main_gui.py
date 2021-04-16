@@ -1,9 +1,4 @@
-# import pymongo
-# import time
-# myclient = pymongo.MongoClient(
-#     "mongodb+srv://CodingBlood:kartik2002@cluster0.njrx7.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
-# mydb = myclient["Chatbox"]
-# mycol = mydb["UserDetails"]
+
 # # =========================REMEMBER IMPORTANT FOR CHATS==================================================================
 
 # # =======================================================================================================================
@@ -58,10 +53,7 @@ delete = PhotoImage(file=r"./ChatBoxGUI/delete.png", height=100, width=100)
 photo1 = PhotoImage(file=r"./ChatBoxGUI/heytest.png")
 canvas1 = Canvas(root, width=400, height=400)
 canvas1.pack(fill="both", expand=True)
-canvas1.create_image(0, 0, image=photo1,anchor="nw")
-
-
-
+canvas1.create_image(0, 0, image=photo1, anchor="nw")
 
 
 
@@ -76,14 +68,16 @@ homeLabel = Label(topFrame, text="Chat Box", font="Bahnschrift 95", bg=color["or
 homeLabel.pack(side="right")
 
 # Main label text:
+import SignUpGUI
 import LoginPageGUI
+import SUserSignUpGUI
 brandLabel = Label(root, text="", font="System 30", bg="gray17", fg="green")
 brandLabel.place(x=100, y=250)
-b1=Button(root, text='   New User', bg=color["nero"], fg=color["orange"], font=('Malgun Gothic Semilight', 25, "bold"), width=500, height=100, bd=5, image=signup, compound = LEFT, anchor="nw")
+b1=Button(root, text='   New User', command=SignUpGUI.main, bg=color["nero"], fg=color["orange"], font=('Malgun Gothic Semilight', 25, "bold"), width=500, height=100, bd=5, image=signup, compound = LEFT, anchor="nw")
 b2=Button(root, text='   Login', command=LoginPageGUI.main, bg=color["nero"], fg=color["orange"], font=('Malgun Gothic Semilight', 25, "bold"), width=500, height=100, bd=5, image=login, compound = LEFT, anchor="nw")
 b3=Button(root, text='   Login Super User',  bg=color["nero"], fg=color["orange"], font=('Malgun Gothic Semilight', 25, "bold"), width=500, height=100, bd=5, image=login, compound = LEFT, anchor="nw")
 b4=Button(root, text='   Delete account', bg=color["nero"], fg=color["orange"],  font=('Malgun Gothic Semilight', 25, "bold"), width=500, height=100, bd=5, image=delete, compound = LEFT, anchor="nw")
-b5=Button(root, text='   New Super User', bg=color["nero"], fg=color["orange"],  font=('Malgun Gothic Semilight', 25, "bold"), width=500, height=100, bd=5, image=signup, compound = LEFT, anchor="nw")
+b5=Button(root, text='   New Super User', command=SUserSignUpGUI.main, bg=color["nero"], fg=color["orange"],  font=('Malgun Gothic Semilight', 25, "bold"), width=500, height=100, bd=5, image=signup, compound = LEFT, anchor="nw")
 b6=Button(root, text='   Find Friend By Id', bg=color["nero"], fg=color["orange"], font=('Malgun Gothic Semilight', 25, "bold"), width=500, height=100, bd=5, image=find, compound = LEFT, anchor="nw")
 canvas1.create_window(100, 370, anchor="nw", window=b1)
 canvas1.create_window(100, 245, anchor="nw", window=b2)

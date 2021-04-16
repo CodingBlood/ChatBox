@@ -170,27 +170,68 @@ def main():
                     canvas1.create_window(100, 335, anchor="nw", window=desc_of_group1)
 
                 def NPriGrp():
-                    import GlobalChatGUI
-                    GlobalChatGUI.main(str(name))
-                sb1 = Button(root1, text='  Global Chat', bg=color["nero"], fg=color["orange"],
-                            font=('Malgun Gothic Semilight', 25, "bold"), width=500, height=100, bd=5, image=login,
-                            compound=LEFT,anchor="nw", command=Gchat)
-                sl1 = Button(root1, text='  Public Chat Groups', bg=color["nero"], fg=color["orange"],
-                            font=('Malgun Gothic Semilight', 25, "bold"), width=500, height=100, bd=5, image=login,
-                            compound=LEFT,
-                            anchor="nw", command=PuGrp)
-                sl2 = Button(root1, text='  Private Chat Groups', bg=color["nero"], fg=color["orange"],
-                            font=('Malgun Gothic Semilight', 25, "bold"), width=500, height=100, bd=5, image=login,
-                            compound=LEFT,
-                            anchor="nw", command=PrGrp)
-                sl3 = Button(root1, text='  New Public Group', bg=color["nero"], fg=color["orange"],
-                            font=('Malgun Gothic Semilight', 25, "bold"), width=500, height=100, bd=5, image=login,
-                            compound=LEFT,
-                            anchor="nw", command=NPuGrp)
-                sl4 = Button(root1, text='  New Private Group', bg=color["nero"], fg=color["orange"],
-                            font=('Malgun Gothic Semilight', 25, "bold"), width=500, height=100, bd=5, image=login,
-                            compound=LEFT,
-                            anchor="nw", command=NPriGrp)
+                    Ngn = StringVar()
+                    Ngd = StringVar()
+                    NgS = StringVar()
+                    sb1.destroy()
+                    sl1.destroy()
+                    sl2.destroy()
+                    sl3.destroy()
+                    sl4.destroy()
+                    def submit():
+                        GName=Ngn.get()
+                        Desc=Ngd.get()
+                        Skey=NgS.get()
+                        myquery = {"Gname": GName, "Owner": name}
+                        mycol = mydb["PrivateChatGroups"]
+                        mydoc = mycol.find(myquery)
+                        for x in mydoc:
+                            res = not bool(x)
+                            while not res:
+                                print("Similar Group Already Exists Already Exists")
+                                NPriGrp()
+                        mydict = {"GName": GName,
+                                  "Desc": Desc,
+                                  "SKey": Skey,
+                                  "Owner": name,
+                                  "Admins": {
+                                      "username": [name]
+                                  },
+                                  "Members": {
+                                      "username": [{
+                                          "username": name,
+                                      }
+                                      ]
+                                  },
+                                  "Chats": [
+                                      {
+                                          "username": name,
+                                          "Message": "Booyahh! Welcome To My Own Public Group"
+                                      }
+                                  ]
+                                  }
+                        temp = mycol.insert_one(mydict)
+                        from ChatBoxGUI import PrivateChatGUI
+                        PrivateChatGUI.main(GName, name)
+                    submit = Button(root1,command=submit , text='      CreateGroup', bg=color["nero"], fg=color["orange"], font=('Malgun Gothic Semilight', 25, "bold"), width=500, height=100, bd=5, image=login, compound=LEFT, anchor="nw")
+                    Name_of_group = Entry(root1, font=('Malgun Gothic Semilight', 25, "bold"), bd=5, textvariable=Ngn)
+                    Desc_of_group = Entry(root1, font=('Malgun Gothic Semilight', 25, "bold"), bd=5, textvariable=Ngd)
+                    Skey_of_group = Entry(root1, font=('Malgun Gothic Semilight', 25, "bold"), bd=5, textvariable=NgS, show='*')
+                    Desc_of_group1 = Label(root1, text='Description Of Group', width=18, height=1, font=('Malgun Gothic Semilight', 25, "bold"), bd=5)
+                    Name_of_group1 = Label(root1, text='Group Name', width=18, height=1, font=('Malgun Gothic Semilight', 25, "bold"), bd=5)
+                    Skey_of_group1 = Label(root1, text='Security Key', width=18, height=1, font=('Malgun Gothic Semilight', 25, "bold"), bd=5)
+                    canvas1.create_window(300, 585, anchor="nw", window=submit)
+                    canvas1.create_window(700, 210, anchor="nw", window=Name_of_group)
+                    canvas1.create_window(700, 335, anchor="nw", window=Desc_of_group)
+                    canvas1.create_window(100, 210, anchor="nw", window=Name_of_group1)
+                    canvas1.create_window(700, 460, anchor="nw", window=Skey_of_group)
+                    canvas1.create_window(100, 460, anchor="nw", window=Skey_of_group1)
+                    canvas1.create_window(100, 335, anchor="nw", window=Desc_of_group1)
+                sb1 = Button(root1, text='  Global Chat', bg=color["nero"], fg=color["orange"], font=('Malgun Gothic Semilight', 25, "bold"), width=500, height=100, bd=5, image=login, compound=LEFT,anchor="nw", command=Gchat)
+                sl1 = Button(root1, text='  Public Chat Groups', bg=color["nero"], fg=color["orange"], font=('Malgun Gothic Semilight', 25, "bold"), width=500, height=100, bd=5, image=login, compound=LEFT, anchor="nw", command=PuGrp)
+                sl2 = Button(root1, text='  Private Chat Groups', bg=color["nero"], fg=color["orange"], font=('Malgun Gothic Semilight', 25, "bold"), width=500, height=100, bd=5, image=login, compound=LEFT, anchor="nw", command=PrGrp)
+                sl3 = Button(root1, text='  New Public Group', bg=color["nero"], fg=color["orange"], font=('Malgun Gothic Semilight', 25, "bold"), width=500, height=100, bd=5, image=login, compound=LEFT, anchor="nw", command=NPuGrp)
+                sl4 = Button(root1, text='  New Private Group', bg=color["nero"], fg=color["orange"], font=('Malgun Gothic Semilight', 25, "bold"), width=500, height=100, bd=5, image=login, compound=LEFT, anchor="nw", command=NPriGrp)
                 canvas1.create_window(400, 495, anchor="nw", window=sb1)
                 canvas1.create_window(700, 245, anchor="nw", window=sl1)
                 canvas1.create_window(700, 370, anchor="nw", window=sl2)
@@ -268,10 +309,10 @@ def main():
                 font=('Malgun Gothic Semilight', 25, "bold"), width=500, height=100, bd=5, image=login, compound=LEFT,
                 anchor="nw", command=some)
     # canvas1.create_text(100, 245, "Username", width=50, height=1, fg=color["orange"])
-    l1 = Entry(root1,font=('Malgun Gothic Semilight', 25, "bold"),bd=5, textvariable=userid)
-    l2 = Entry(root1,font=('Malgun Gothic Semilight', 25, "bold"),bd=5, textvariable=paswrd, show='*')
-    l3 = Label(root1, text='UserName', width=15, height=1, font=('Malgun Gothic Semilight', 25, "bold"),bd=5)
-    l4 = Label(root1, text='Password', width=15, height=1, font=('Malgun Gothic Semilight', 25, "bold"),bd=5)
+    l1 = Entry(root1, font=('Malgun Gothic Semilight', 25, "bold"), bd=5, textvariable=userid)
+    l2 = Entry(root1, font=('Malgun Gothic Semilight', 25, "bold"), bd=5, textvariable=paswrd, show='*')
+    l3 = Label(root1, text='UserName', width=15, height=1, font=('Malgun Gothic Semilight', 25, "bold"), bd=5)
+    l4 = Label(root1, text='Password', width=15, height=1, font=('Malgun Gothic Semilight', 25, "bold"), bd=5)
     canvas1.create_window(300, 495, anchor="nw", window=b1)
     canvas1.create_window(700, 245, anchor="nw", window=l1)
     canvas1.create_window(700, 370, anchor="nw", window=l2)

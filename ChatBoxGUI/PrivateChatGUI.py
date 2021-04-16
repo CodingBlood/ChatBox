@@ -10,15 +10,6 @@ def main(Gname,username):
         message.set("")
         tasks(x)
     def tasks(x):
-        def task1():
-            mycol = mydb["PrivateChatGroups"]
-            for change in mycol.watch(full_document='updateLookup'):
-                t.insert(END, change["fullDocument"]["Chats"][-1]["username"] + " : " + change["fullDocument"]["Chats"][-1]["Message"] + "\n")
-                break
-            return 0
-
-
-
 
         def task2():
             mydict = {"username": str(username), "Message": x}
@@ -27,10 +18,20 @@ def main(Gname,username):
             document['Chats'].append(mydict)
             PChat.update({'GName': Gname}, document)
             return 0
-        t1 = KThread(target=task1)
-        # t1.setDaemon(True)
-        t1.start()
+
         task2()
+
+    def task1():
+        mycol = mydb["PrivateChatGroups"]
+        for change in mycol.watch(full_document='updateLookup'):
+            t.insert(END, change["fullDocument"]["Chats"][-1]["username"] + " : " + change["fullDocument"]["Chats"][-1][
+                "Message"] + "\n")
+            break
+        return 0
+
+    t1 = KThread(target=task1)
+    # t1.setDaemon(True)
+    t1.start()
     # print(Gname)
     root1 = Toplevel()
     root1.geometry("1300x700")
