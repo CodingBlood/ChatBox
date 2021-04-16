@@ -5,6 +5,8 @@ myclient = pymongo.MongoClient(
     "mongodb+srv://CodingBlood:kartik2002@cluster0.njrx7.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
 mydb = myclient["Chatbox"]
 mycol = mydb["UserDetails"]
+
+
 def main():
     def some():
         name = userid.get()
@@ -19,15 +21,18 @@ def main():
                 l3.destroy()
                 l4.destroy()
                 b1.destroy()
+
                 def Gchat():
                     import GlobalChatGUI
                     GlobalChatGUI.main(str(name))
+
                 def PuGrp():
                     sb1.destroy()
                     sl1.destroy()
                     sl2.destroy()
                     sl3.destroy()
                     sl4.destroy()
+
                     def PuGrpChat(Grpname):
                         from ChatBoxGUI import PublicChatGUI
                         PublicChatGUI.main(Grpname, name)
@@ -37,24 +42,20 @@ def main():
                     #================NOT WORKING================================================================================================
                     # def JoinGrp():
                     #
-                    join = Button(root1, text='+', bg=color["nero"], fg=color["orange"],
-                                 font=('Malgun Gothic Semilight', 15), width=2, bd=5, height=1, command=PuGrpChat)
+                    join = Button(root1, text='+', bg=color["nero"], fg=color["orange"], font=('Malgun Gothic Semilight', 15), width=2, bd=5, height=1, command=PuGrpChat)
                     canvas1.create_window(65, 190, anchor="nw", window=join)
                     #===========================================================================================================================
                     #===========================================================================================================================
                     #===========================================================================================================================
                     #===========================================================================================================================
                     pug_details = mydb["PublicChatGroups"]
-                    b=245
-                    turn=0
+                    b = 245
+                    turn = 0
                     for iterate in pug_details.find():
                         for member in iterate["Members"]['username']:
                             if member['username'] == name:
                                 Gname = iterate["GName"]
-                                pgrp = Button(root1, text=iterate["GName"], bg=color["nero"], fg=color["orange"],
-                                              font=('Malgun Gothic Semilight', 25, "bold"), width=500, height=100, bd=5,image=login,
-                                              compound=LEFT,
-                                              anchor="nw", command=lambda Grpname=Gname: PuGrpChat(Grpname))
+                                pgrp = Button(root1, text=iterate["GName"], bg=color["nero"], fg=color["orange"], font=('Malgun Gothic Semilight', 25, "bold"), width=500, height=100, bd=5, image=login, compound=LEFT, anchor="nw", command=lambda Grpname=Gname: PuGrpChat(Grpname))
                                 if turn >= 3:
                                     m = 700
                                 else:
@@ -62,8 +63,6 @@ def main():
                                 canvas1.create_window(m, b, anchor="nw", window=pgrp)
                                 b += 120
                                 turn += 1
-
-
 
                 def PrGrp():
                     sb1.destroy()
@@ -118,11 +117,12 @@ def main():
                     sl2.destroy()
                     sl3.destroy()
                     sl4.destroy()
+
                     def submit():
-                        GName=ngn.get()
-                        Desc=ngd.get()
+                        GName = ngn.get()
+                        Desc = ngd.get()
                         # username=userid.get()
-                        Origin=ngo.get()
+                        Origin = ngo.get()
                         myquery = {"Gname": GName}
                         mycol = mydb["PublicChatGroups"]
                         mydoc = mycol.find(myquery)
@@ -154,7 +154,7 @@ def main():
                         temp = mycol.insert_one(mydict)
                         from ChatBoxGUI import PublicChatGUI
                         PublicChatGUI.main(GName, name)
-                    submit = Button(root1,command=submit , text='      CreateGroup', bg=color["nero"], fg=color["orange"], font=('Malgun Gothic Semilight', 25, "bold"), width=500, height=100, bd=5, image=login, compound=LEFT, anchor="nw")
+                    submit = Button(root1, command=submit, text='      CreateGroup', bg=color["nero"], fg=color["orange"], font=('Malgun Gothic Semilight', 25, "bold"), width=500, height=100, bd=5, image=login, compound=LEFT, anchor="nw")
                     name_of_group = Entry(root1, font=('Malgun Gothic Semilight', 25, "bold"), bd=5, textvariable=ngn)
                     desc_of_group = Entry(root1, font=('Malgun Gothic Semilight', 25, "bold"), bd=5, textvariable=ngd)
                     origin_of_group = Entry(root1, font=('Malgun Gothic Semilight', 25, "bold"), bd=5, textvariable=ngo)
@@ -178,10 +178,11 @@ def main():
                     sl2.destroy()
                     sl3.destroy()
                     sl4.destroy()
+
                     def submit():
-                        GName=Ngn.get()
-                        Desc=Ngd.get()
-                        Skey=NgS.get()
+                        GName = Ngn.get()
+                        Desc = Ngd.get()
+                        Skey = NgS.get()
                         myquery = {"Gname": GName, "Owner": name}
                         mycol = mydb["PrivateChatGroups"]
                         mydoc = mycol.find(myquery)
@@ -213,7 +214,7 @@ def main():
                         temp = mycol.insert_one(mydict)
                         from ChatBoxGUI import PrivateChatGUI
                         PrivateChatGUI.main(GName, name)
-                    submit = Button(root1,command=submit , text='      CreateGroup', bg=color["nero"], fg=color["orange"], font=('Malgun Gothic Semilight', 25, "bold"), width=500, height=100, bd=5, image=login, compound=LEFT, anchor="nw")
+                    submit = Button(root1, command=submit, text='      CreateGroup', bg=color["nero"], fg=color["orange"], font=('Malgun Gothic Semilight', 25, "bold"), width=500, height=100, bd=5, image=login, compound=LEFT, anchor="nw")
                     Name_of_group = Entry(root1, font=('Malgun Gothic Semilight', 25, "bold"), bd=5, textvariable=Ngn)
                     Desc_of_group = Entry(root1, font=('Malgun Gothic Semilight', 25, "bold"), bd=5, textvariable=Ngd)
                     Skey_of_group = Entry(root1, font=('Malgun Gothic Semilight', 25, "bold"), bd=5, textvariable=NgS, show='*')
@@ -227,7 +228,7 @@ def main():
                     canvas1.create_window(700, 460, anchor="nw", window=Skey_of_group)
                     canvas1.create_window(100, 460, anchor="nw", window=Skey_of_group1)
                     canvas1.create_window(100, 335, anchor="nw", window=Desc_of_group1)
-                sb1 = Button(root1, text='  Global Chat', bg=color["nero"], fg=color["orange"], font=('Malgun Gothic Semilight', 25, "bold"), width=500, height=100, bd=5, image=login, compound=LEFT,anchor="nw", command=Gchat)
+                sb1 = Button(root1, text='  Global Chat', bg=color["nero"], fg=color["orange"], font=('Malgun Gothic Semilight', 25, "bold"), width=500, height=100, bd=5, image=login, compound=LEFT, anchor="nw", command=Gchat)
                 sl1 = Button(root1, text='  Public Chat Groups', bg=color["nero"], fg=color["orange"], font=('Malgun Gothic Semilight', 25, "bold"), width=500, height=100, bd=5, image=login, compound=LEFT, anchor="nw", command=PuGrp)
                 sl2 = Button(root1, text='  Private Chat Groups', bg=color["nero"], fg=color["orange"], font=('Malgun Gothic Semilight', 25, "bold"), width=500, height=100, bd=5, image=login, compound=LEFT, anchor="nw", command=PrGrp)
                 sl3 = Button(root1, text='  New Public Group', bg=color["nero"], fg=color["orange"], font=('Malgun Gothic Semilight', 25, "bold"), width=500, height=100, bd=5, image=login, compound=LEFT, anchor="nw", command=NPuGrp)
@@ -295,11 +296,6 @@ def main():
     homeLabel = Label(topFrame, text="Chat Box", font="Bahnschrift 95", bg=color["orange"], fg="gray17", height=2,
                       padx=20)
     homeLabel.pack(side="right")
-
-
-
-
-
     # Main label text:
     userid = StringVar()
     paswrd = StringVar()
@@ -318,16 +314,6 @@ def main():
     canvas1.create_window(700, 370, anchor="nw", window=l2)
     canvas1.create_window(100, 245, anchor="nw", window=l3)
     canvas1.create_window(100, 370, anchor="nw", window=l4)
-
-
-
-
-
-
-
-
-
-
     # Navbar button:
     navbarBtn = Button(topFrame, image=navIcon, bg=color["orange"], activebackground=color["orange"], bd=0, padx=20,
                        command=switch)

@@ -2,6 +2,8 @@ from tkinter import *
 import pymongo
 myclient = pymongo.MongoClient("mongodb+srv://CodingBlood:kartik2002@cluster0.njrx7.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
 mydb = myclient["Chatbox"]
+
+
 def main():
     # setting switch function:
     def switch():
