@@ -110,8 +110,65 @@ def main():
                                 turn += 1
 
                 def NPuGrp():
-                    import GlobalChatGUI
-                    GlobalChatGUI.main(str(name))
+                    ngn = StringVar()
+                    ngd = StringVar()
+                    ngo = StringVar()
+                    sb1.destroy()
+                    sl1.destroy()
+                    sl2.destroy()
+                    sl3.destroy()
+                    sl4.destroy()
+                    def submit():
+                        GName=ngn.get()
+                        Desc=ngd.get()
+                        # username=userid.get()
+                        Origin=ngo.get()
+                        myquery = {"Gname": GName}
+                        mycol = mydb["PublicChatGroups"]
+                        mydoc = mycol.find(myquery)
+                        for x in mydoc:
+                            res = not bool(x)
+                            while not res:
+                                print("Group with Same Name Already Exists")
+                                NPuGrp()
+                        mydict = {"GName": GName,
+                                  "Desc": Desc,
+                                  "Origin": Origin,
+                                  "Owner": name,
+                                  "Admins": {
+                                      "username": [name]
+                                  },
+                                  "Members": {
+                                      "username": [{
+                                          "username": name,
+                                      }
+                                      ]
+                                  },
+                                  "Chats": [
+                                      {
+                                          "username": name,
+                                          "Message": "Booyahh! Welcome To My Own Public Group"
+                                      }
+                                  ]
+                                  }
+                        temp = mycol.insert_one(mydict)
+                        from ChatBoxGUI import PublicChatGUI
+                        PublicChatGUI.main(GName, name)
+                    submit = Button(root1,command=submit , text='      CreateGroup', bg=color["nero"], fg=color["orange"], font=('Malgun Gothic Semilight', 25, "bold"), width=500, height=100, bd=5, image=login, compound=LEFT, anchor="nw")
+                    name_of_group = Entry(root1, font=('Malgun Gothic Semilight', 25, "bold"), bd=5, textvariable=ngn)
+                    desc_of_group = Entry(root1, font=('Malgun Gothic Semilight', 25, "bold"), bd=5, textvariable=ngd)
+                    origin_of_group = Entry(root1, font=('Malgun Gothic Semilight', 25, "bold"), bd=5, textvariable=ngo)
+                    name_of_group1 = Label(root1, text='Group Name', width=18, height=1, font=('Malgun Gothic Semilight', 25, "bold"), bd=5)
+                    desc_of_group1 = Label(root1, text='Description Of Group', width=18, height=1, font=('Malgun Gothic Semilight', 25, "bold"), bd=5)
+                    origin_of_group1 = Label(root1, text='Origin Of Group', width=18, height=1, font=('Malgun Gothic Semilight', 25, "bold"), bd=5)
+                    canvas1.create_window(300, 585, anchor="nw", window=submit)
+                    canvas1.create_window(700, 210, anchor="nw", window=name_of_group)
+                    canvas1.create_window(700, 335, anchor="nw", window=desc_of_group)
+                    canvas1.create_window(100, 210, anchor="nw", window=name_of_group1)
+                    canvas1.create_window(700, 460, anchor="nw", window=origin_of_group)
+                    canvas1.create_window(100, 460, anchor="nw", window=origin_of_group1)
+                    canvas1.create_window(100, 335, anchor="nw", window=desc_of_group1)
+
                 def NPriGrp():
                     import GlobalChatGUI
                     GlobalChatGUI.main(str(name))
